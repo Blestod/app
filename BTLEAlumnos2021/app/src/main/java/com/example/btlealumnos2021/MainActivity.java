@@ -1,5 +1,4 @@
-
-package org.jordi.btlealumnos2021;
+package com.example.btlealumnos2021;
 // ------------------------------------------------------------------
 // ------------------------------------------------------------------
 
@@ -41,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private ScanCallback callbackDelEscaneo = null;
 
     // --------------------------------------------------------------
+    //View->buscarTodosLosDispositivosBTLE()->
     // --------------------------------------------------------------
     private void buscarTodosLosDispositivosBTLE() {
         Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): empieza ");
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
     } // ()
 
     // --------------------------------------------------------------
+    //ScanResult->mostrarInformacionDispositivoBTLE()->
     // --------------------------------------------------------------
     private void mostrarInformacionDispositivoBTLE( ScanResult resultado ) {
 
@@ -126,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
     } // ()
 
     // --------------------------------------------------------------
+    //T->buscarEsteDispositivoBTLE()->
     // --------------------------------------------------------------
     private void buscarEsteDispositivoBTLE(final String dispositivoBuscado ) {
         Log.d(ETIQUETA_LOG, " buscarEsteDispositivoBTLE(): empieza ");
@@ -163,12 +165,13 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): empezamos a escanear buscando: " + dispositivoBuscado );
         //Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): empezamos a escanear buscando: " + dispositivoBuscado
-          //      + " -> " + Utilidades.stringToUUID( dispositivoBuscado ) );
+        //      + " -> " + Utilidades.stringToUUID( dispositivoBuscado ) );
 
         this.elEscanner.startScan( this.callbackDelEscaneo );
     } // ()
 
     // --------------------------------------------------------------
+    //->detenerBusquedaDispositivosBTLE()->
     // --------------------------------------------------------------
     private void detenerBusquedaDispositivosBTLE() {
 
@@ -182,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
     } // ()
 
     // --------------------------------------------------------------
+    //View->botonBuscarDispositivosBTLEPulsado()->
     // --------------------------------------------------------------
     public void botonBuscarDispositivosBTLEPulsado( View v ) {
         Log.d(ETIQUETA_LOG, " boton buscar dispositivos BTLE Pulsado" );
@@ -189,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
     } // ()
 
     // --------------------------------------------------------------
+    //View->botonBuscarNuestroDispositivoBTLEPulsado->
     // --------------------------------------------------------------
     public void botonBuscarNuestroDispositivoBTLEPulsado( View v ) {
         Log.d(ETIQUETA_LOG, " boton nuestro dispositivo BTLE Pulsado" );
@@ -200,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
     } // ()
 
     // --------------------------------------------------------------
+    //View-botonDetenerBusquedaDispositivosBTLEPulsado->
     // --------------------------------------------------------------
     public void botonDetenerBusquedaDispositivosBTLEPulsado( View v ) {
         Log.d(ETIQUETA_LOG, " boton detener busqueda dispositivos BTLE Pulsado" );
@@ -207,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
     } // ()
 
     // --------------------------------------------------------------
+    //->inicializarBluetooth()->
     // --------------------------------------------------------------
     private void inicializarBlueTooth() {
         Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): obtenemos adaptador BT ");
@@ -251,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     // --------------------------------------------------------------
+    //SavedInstanceState->onCreate->
     // --------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -266,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
     } // onCreate()
 
     // --------------------------------------------------------------
+    //N,T[],N[]->onRequestPermissionsResult->
     // --------------------------------------------------------------
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
@@ -291,10 +300,43 @@ public class MainActivity extends AppCompatActivity {
         // permissions this app might request.
     } // ()
 
+
+    // ---------------------------------------------------------------------------------------------
+    //View->prueba1_pulsado->
+    // ---------------------------------------------------------------------------------------------
+    public void prueba1_pulsado(View v) {
+        Log.d( "pruebasPeticionario", "prueba1_pulsado() empieza");
+
+        probarEnviarPOST();
+
+        Log.d( "pruebasPeticionario", "prueba1_pulsado() termina");
+    } // ()
+
+    // ---------------------------------------------------------------------------------------------
+    //->probarEnviarPOST->
+    // ---------------------------------------------------------------------------------------------
+    private void probarEnviarPOST() {
+        PeticionarioREST elPeticionario = new PeticionarioREST();
+
+        elPeticionario.hacerPeticionREST("POST",  "http://192.168.1.114:8080/alta",
+
+                "{\"idMedicion\": \"5\", \"o3\": \"190\", \"temperatura\": \"12.3\", \"fecha\": \"2023-10-06T14:30:00\", \"lugar\": \"40.7128 -74.0060\"}",
+                new PeticionarioREST.RespuestaREST () {
+                    @Override
+                    public void callback(int codigo, String cuerpo) {
+                        Log.d( "pruebasPeticionario", "TENGO RESPUESTA:\ncodigo = " + codigo + "\ncuerpo: \n" + cuerpo);
+
+                    }
+                }
+        );
+
+        //elPeticionario.hacerPeticionREST("POST",  "https://jsonplaceholder.typicode.com/posts",
+        //elPeticionario.hacerPeticionREST("POST",  "https://reqbin.com/echo/post/json",
+
+    } // ()
+
 } // class
 // --------------------------------------------------------------
 // --------------------------------------------------------------
 // --------------------------------------------------------------
 // --------------------------------------------------------------
-
-
